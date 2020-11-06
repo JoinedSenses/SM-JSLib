@@ -175,3 +175,24 @@ stock void GetClassName(TFClassType class, char[] buffer, int size) {
 		case TFClass_Engineer: strcopy(buffer, size, "Engineer");
 	}
 }
+
+/**
+ * Purpose: Checks a client index for validity
+ * @note To be only used within a native
+ * 
+ * @param client        Client index
+ * @param inGame        Set to false to not test if client is in game
+ */
+stock void CheckNativeClient(int client, bool inGame = true) {
+	if (client < 1 || client > MaxClients) {
+		ThrowNativeError(SP_ERROR_NATIVE, "Invalid client index (%i)", client);
+	}
+
+	if (!IsClientConnected(client)) {
+		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is not connected", client);
+	}
+
+	if (inGame && !IsClientInGame(client)) {
+		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is not in game", client);
+	}
+}
