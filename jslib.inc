@@ -49,7 +49,8 @@ stock bool IsEmptyVector(float vector[3]) {
 /**
  * Purpose: Return absolute value of an integer
  * 
- * @param value       The value to check against
+ * @param value        The value to check against
+ * @return             Absolute value
  */
 stock int Abs(int value) {
     int mask = value >> 31;
@@ -59,7 +60,8 @@ stock int Abs(int value) {
 /**
  * Purpose: Return absolute value of a floating point value
  * 
- * @param value       The value to check against
+ * @param value        The value to check against
+ * @return             Absolute value
  */
 stock float AbsF(float value) {
    return view_as<float>(view_as<int>(x) & ~cellmin);
