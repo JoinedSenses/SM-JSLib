@@ -1,2 +1,2 @@
 # SM-JSLib
-Misc stock lib
+Misc stock lib for SourceMod
