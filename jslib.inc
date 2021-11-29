@@ -64,7 +64,7 @@ stock int Abs(int value) {
  * @return             Absolute value
  */
 stock float AbsF(float value) {
-   return view_as<float>(view_as<int>(x) & ~cellmin);
+   return view_as<float>(view_as<int>(value) & ~cellmin);
 }
 
 /**
