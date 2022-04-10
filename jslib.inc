@@ -109,6 +109,34 @@ stock float ClampF(float value, float min, float max) {
 	return value;
 }
 
+stock int HexToInt(const char[] hex) {
+	return StringToInt(hex, 16);
+}
+
+stock void IntToHex(int value, char[] hex, int size) {
+	FormatEx(hex, size, "%06X", value);
+}
+
+stock void HexToRGB(const char[] hex, int rgb[3]) {
+	IntToRGB(HexToInt(hex), rgb);
+}
+
+stock void RGBToHex(int rgb[3], char[] hex, int size) {
+	IntToHex(RGBToInt(rgb), hex, size);
+}
+
+stock void IntToRGB(int value, int rgb[3]) {
+	rgb[0] = ((value >> 16) & 0xFF);
+	rgb[1] = ((value >>  8) & 0xFF);
+	rgb[2] = ((value      ) & 0xFF);
+}
+
+stock int RGBToInt(int rgb[3]) {
+	return ((rgb[0] & 0xFF) << 16) |
+	       ((rgb[1] & 0xFF) <<  8) |
+	       ((rgb[2] & 0xFF)      );
+}
+
 /**
  * Purpose: Searches for a client by name.
  * Differs from FindTarget in that it doesn't call ReplyToTargetError().
