@@ -152,7 +152,7 @@ stock int RGBToInt(const int rgb[3]) {
 	       ((rgb[2] & 0xFF)      );
 }
 
-stock int RGBAToInt(const int rgba[3]) {
+stock int RGBAToInt(const int rgba[4]) {
 	return ((rgb[0] & 0xFF) << 24) |
 	       ((rgb[1] & 0xFF) << 16) |
 	       ((rgb[2] & 0xFF) <<  8) |
