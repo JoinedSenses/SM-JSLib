@@ -121,8 +121,16 @@ stock void HexToRGB(const char[] hex, int rgb[3]) {
 	IntToRGB(HexToInt(hex), rgb);
 }
 
-stock void RGBToHex(int rgb[3], char[] hex, int size) {
+stock void HexToRGBA(const char[] hex, int rgba[4]) {
+	IntToRGBA(HexToInt(hex), rgba);
+}
+
+stock void RGBToHex(const int rgb[3], char[] hex, int size) {
 	IntToHex(RGBToInt(rgb), hex, size);
+}
+
+stock void RGBAToHex(const int rgba[3], char[] hex, int size) {
+	IntToHex(RGBAToInt(rgb), hex, size);
 }
 
 stock void IntToRGB(int value, int rgb[3]) {
@@ -131,10 +139,24 @@ stock void IntToRGB(int value, int rgb[3]) {
 	rgb[2] = ((value      ) & 0xFF);
 }
 
-stock int RGBToInt(int rgb[3]) {
+stock void IntToRGBA(int value, int rgba[4]) {
+	rgb[0] = ((value >> 24) & 0xFF);
+	rgb[1] = ((value >> 16) & 0xFF);
+	rgb[2] = ((value >>  8) & 0xFF);
+	rgb[3] = ((value      ) & 0xFF);
+}
+
+stock int RGBToInt(const int rgb[3]) {
 	return ((rgb[0] & 0xFF) << 16) |
 	       ((rgb[1] & 0xFF) <<  8) |
 	       ((rgb[2] & 0xFF)      );
+}
+
+stock int RGBAToInt(const int rgba[3]) {
+	return ((rgb[0] & 0xFF) << 24) |
+	       ((rgb[1] & 0xFF) << 16) |
+	       ((rgb[2] & 0xFF) <<  8) |
+	       ((rgb[3] & 0xFF)      );
 }
 
 /**
