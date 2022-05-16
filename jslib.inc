@@ -3,6 +3,7 @@
 #endif
 #define _jslib_included_
 
+#include <tf2_stocks>
 // --------------
 
 #define EMPTY_VECTOR view_as<float>({0,0,0})
@@ -37,7 +38,7 @@ enum {
 
 
 /**
- * Purpose: Checks if a 3D vector equals {0.0, 0.0, 0.0}.
+ * Checks if a 3D vector equals {0.0, 0.0, 0.0}.
  * 
  * @param vector       The 3D vector to check against
  * @return             True if empty, else false
@@ -47,7 +48,7 @@ stock bool IsEmptyVector(float vector[3]) {
 }
 
 /**
- * Purpose: Return absolute value of an integer
+ * Return absolute value of an integer
  * 
  * @param value        The value to check against
  * @return             Absolute value
@@ -58,7 +59,7 @@ stock int Abs(int value) {
 }
 
 /**
- * Purpose: Return absolute value of a floating point value
+ * Return absolute value of a floating point value
  * 
  * @param value        The value to check against
  * @return             Absolute value
@@ -68,7 +69,7 @@ stock float AbsF(float value) {
 }
 
 /**
- * Purpose: Clamp an int value to inclusive range [min, max].
+ * Clamp an int value to inclusive range [min, max].
  * Assumes that min is less than max.
  * 
  * @param value        The value to check against
@@ -89,7 +90,7 @@ stock int Clamp(int value, int min, int max) {
 }
 
 /**
- * Purpose: Clamp a float value to inclusive range [min, max].
+ * Clamp a float value to inclusive range [min, max].
  * Assumes that min is less than max.
  * 
  * @param value        The value to check against
@@ -109,36 +110,98 @@ stock float ClampF(float value, float min, float max) {
 	return value;
 }
 
+/**
+ * Converts a hex string to an integer value
+ * 
+ * @param hex          The hex string to convert
+ * @return             Integer result of the hex conversion
+ */
 stock int HexToInt(const char[] hex) {
 	return StringToInt(hex, 16);
 }
 
-stock void IntToHex(int value, char[] hex, int size) {
+/**
+ * Formats an int value to 6 character hex
+ * 
+ * @param value        The value to format
+ * @param hex          Buffer to store result
+ * @param size         Buffer size
+ */
+stock void IntToHex6(int value, char[] hex, int size) {
 	FormatEx(hex, size, "%06X", value);
 }
 
+/**
+ * Formats an int value to 8 character hex
+ * 
+ * @param value        The value to format
+ * @param hex          Buffer to store result
+ * @param size         Buffer size
+ */
+stock void IntToHex8(int value, char[] hex, int size) {
+	FormatEx(hex, size, "%08X", value);
+}
+
+/**
+ * Converts hex sequence to RGB
+ * 
+ * @param hex          Hex string to convert
+ * @param rgb          Result of conversion
+ */
 stock void HexToRGB(const char[] hex, int rgb[3]) {
 	IntToRGB(HexToInt(hex), rgb);
 }
 
+/**
+ * Converts hex sequence ro RGBA
+ * 
+ * @param hex          Hex string to convert
+ * @param rgba         Result of conversion
+ */
 stock void HexToRGBA(const char[] hex, int rgba[4]) {
 	IntToRGBA(HexToInt(hex), rgba);
 }
 
+/**
+ * Converts RGB to 6 character hex sequence
+ * 
+ * @param rgb          The RGB int values to convert
+ * @param hex          Buffer to store result
+ * @param size         Buffer size
+ */
 stock void RGBToHex(const int rgb[3], char[] hex, int size) {
-	IntToHex(RGBToInt(rgb), hex, size);
+	IntToHex6(RGBToInt(rgb), hex, size);
 }
 
+/**
+ * Converts RGBA to 8 character hex sequence
+ * 
+ * @param rgba         The RGBA int values to convert
+ * @param hex          Buffer to store result
+ * @param size         Buffer size
+ */
 stock void RGBAToHex(const int rgba[3], char[] hex, int size) {
-	IntToHex(RGBAToInt(rgb), hex, size);
+	IntToHex8(RGBAToInt(rgb), hex, size);
 }
 
+/**
+ * Converts int value to RGB values
+ * 
+ * @param value        The int value to convert
+ * @param rgb          Buffer to store result
+ */
 stock void IntToRGB(int value, int rgb[3]) {
 	rgb[0] = ((value >> 16) & 0xFF);
 	rgb[1] = ((value >>  8) & 0xFF);
 	rgb[2] = ((value      ) & 0xFF);
 }
 
+/**
+ * Converts int value to RGBA values
+ * 
+ * @param value         The int value to convert
+ * @param rgba          Buffer to store results
+ */
 stock void IntToRGBA(int value, int rgba[4]) {
 	rgb[0] = ((value >> 24) & 0xFF);
 	rgb[1] = ((value >> 16) & 0xFF);
@@ -146,12 +209,24 @@ stock void IntToRGBA(int value, int rgba[4]) {
 	rgb[3] = ((value      ) & 0xFF);
 }
 
+/**
+ * Converts RGB values to int value
+ * 
+ * @param rgb           The RGB values to convert
+ * @return              Result of conversion from RGB to int
+ */
 stock int RGBToInt(const int rgb[3]) {
 	return ((rgb[0] & 0xFF) << 16) |
 	       ((rgb[1] & 0xFF) <<  8) |
 	       ((rgb[2] & 0xFF)      );
 }
 
+/**
+ * Converts RGBA values to int value
+ * 
+ * @param rgba          The RGBA values to convert
+ * @return              Result of conversion from RGBA to int
+ */
 stock int RGBAToInt(const int rgba[4]) {
 	return ((rgb[0] & 0xFF) << 24) |
 	       ((rgb[1] & 0xFF) << 16) |
@@ -160,7 +235,7 @@ stock int RGBAToInt(const int rgba[4]) {
 }
 
 /**
- * Purpose: Searches for a client by name.
+ * Searches for a client by name.
  * Differs from FindTarget in that it doesn't call ReplyToTargetError().
  * 
  * @param client       Client index of player searching for target
@@ -192,7 +267,7 @@ stock int FindTargetEx(int client, const char[] target, bool nobots = false, boo
 }
 
 /**
- * Purpose: Allows for changing the ammo count for the specific client and weapon
+ * Allows for changing the ammo count for the specific client and weapon
  * 
  * @param client         Client index
  * @param weapon         Weapon entity
@@ -206,7 +281,7 @@ stock void SetPrimaryAmmo(int client, int weapon, int ammo) {
 }
 
 /**
- * Purpose: Retrieves the string name of a class based on TFClassType
+ * Retrieves the string name of a class based on TFClassType
  * 
  * @param class     The class to retrieve name of
  * @param buffer    Destination string buffer
@@ -227,11 +302,15 @@ stock void GetClassName(TFClassType class, char[] buffer, int size) {
 }
 
 /**
- * Purpose: Checks a client index for validity
+ * Checks a client index for validity
+ * 
  * @note To be only used within a native
  * 
  * @param client        Client index
  * @param inGame        Set to false to not test if client is in game
+ * 
+ * @error Throws if 1) client index out of bounds. 2) client is not connected 3) inGame param true
+ *        and client is not in game.
  */
 stock void CheckNativeClient(int client, bool inGame = true) {
 	if (client < 1 || client > MaxClients) {
